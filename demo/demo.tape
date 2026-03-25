@@ -23,9 +23,13 @@ Enter
 Sleep 500ms
 Show
 
-Type "# Upload an image"
+Type "npx gitshot"
 Enter
-Sleep 600ms
+Sleep 3s
+
+Type ""
+Enter
+Sleep 300ms
 
 Type "npx gitshot rick.gif"
 Enter
@@ -34,10 +38,6 @@ Sleep 10s
 Type ""
 Enter
 Sleep 300ms
-
-Type "# Upload and comment on an issue"
-Enter
-Sleep 600ms
 
 Type "npx gitshot rick.gif --issue 1 -m 'Rickrolling'"
 Enter
