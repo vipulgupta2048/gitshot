@@ -9,8 +9,7 @@
 </p>
 
 <p align="center">
-  <b>Screenshots uploaded on GitHub, no browser needed.</b><br>
-  <sub>Zero-config, agent-first CLI to upload images to issues, PRs, and comments.</sub>
+  <b>Zero-config, agent-first CLI to upload images to issues, PRs, and comments.</b><br>
 </p>
 
 <p align="center">
