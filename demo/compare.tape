@@ -11,17 +11,17 @@ Type "# Upload multiple images for a visual diff"
 Enter
 Sleep 600ms
 
-Type "npx gitshot before.png after.png"
+Type "npx gitshot before.png after.png --pr 42 -m 'Visual diff'"
 Enter
 Sleep 5s
 
 Sleep 500ms
 
-Type "# Create an issue with a screenshot"
+Type "# Create an issue with rick.gif"
 Enter
 Sleep 600ms
 
-Type 'npx gitshot bug.png | gh issue create --title "UI Bug" --body-file -'
+Type 'npx gitshot rick.gif --new-issue "UI Bug: got rickrolled"'
 Enter
 Sleep 4s
 

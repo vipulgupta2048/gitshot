@@ -7,11 +7,11 @@ Set Theme "Catppuccin Mocha"
 Set Padding 20
 Set TypingSpeed 80ms
 
-Type "# Upload a screenshot to a GitHub issue"
+Type "# Upload rick.gif and comment on a PR"
 Enter
 Sleep 800ms
 
-Type "npx gitshot bug-screenshot.png --backend catbox"
+Type "npx gitshot rick.gif --pr 42"
 Enter
 Sleep 500ms
 
@@ -21,11 +21,11 @@ Sleep 4s
 Type ""
 Sleep 500ms
 
-Type "# Pipe it into a PR comment"
+Type "# Upload and comment on an issue"
 Enter
 Sleep 600ms
 
-Type "npx gitshot fix-preview.png | gh pr comment 42 --body-file -"
+Type "npx gitshot rick.gif --issue 10 -m 'Never gonna give you up'"
 Enter
 Sleep 4s
 

@@ -11,7 +11,7 @@ Type "# Simple upload — returns markdown"
 Enter
 Sleep 600ms
 
-Type "npx gitshot screenshot.png"
+Type "npx gitshot rick.gif"
 Enter
 Sleep 4s
 
@@ -21,7 +21,7 @@ Type "# Raw URL for scripting"
 Enter
 Sleep 600ms
 
-Type "npx gitshot --raw screenshot.png"
+Type "npx gitshot --raw rick.gif"
 Enter
 Sleep 4s
 
@@ -31,7 +31,7 @@ Type "# JSON for agents"
 Enter
 Sleep 600ms
 
-Type "npx gitshot --json screenshot.png"
+Type "npx gitshot --json rick.gif"
 Enter
 Sleep 4s
 
