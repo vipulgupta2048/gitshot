@@ -5,28 +5,42 @@ Set Width 1200
 Set Height 600
 Set Theme "Catppuccin Mocha"
 Set Padding 20
-Set TypingSpeed 80ms
+Set TypingSpeed 50ms
+Set Shell fish
+
+Require node
+
+Hide
+Type "set -gx PATH /Users/vipulgupta2048/gitshot/node_modules/.bin $PATH"
+Enter
+Type "function gitshot; node /Users/vipulgupta2048/gitshot/dist/index.js $argv; end"
+Enter
+Type "cd /Users/vipulgupta2048/gitshot"
+Enter
+Sleep 1s
+Type "clear"
+Enter
+Sleep 500ms
+Show
 
 Type "# Upload rick.gif and comment on a PR"
 Enter
-Sleep 800ms
+Sleep 600ms
 
-Type "npx gitshot rick.gif --pr 42"
+Type "gitshot rick.gif --pr 42"
 Enter
-Sleep 500ms
-
-# Wait for real output
-Sleep 4s
+Sleep 10s
 
 Type ""
-Sleep 500ms
+Enter
+Sleep 300ms
 
 Type "# Upload and comment on an issue"
 Enter
 Sleep 600ms
 
-Type "npx gitshot rick.gif --issue 10 -m 'Never gonna give you up'"
+Type "gitshot rick.gif --issue 10 -m 'Never gonna give you up'"
 Enter
-Sleep 4s
+Sleep 10s
 
 Sleep 2s

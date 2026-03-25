@@ -1,17 +1,18 @@
 # gitshot
 
-[![npm version](https://img.shields.io/npm/v/gitshot?style=flat-square)](https://www.npmjs.com/package/gitshot)
-[![npm downloads](https://img.shields.io/npm/dm/gitshot?style=flat-square)](https://www.npmjs.com/package/gitshot)
-[![CI](https://img.shields.io/github/actions/workflow/status/vipulgupta2048/gitshot/ci.yml?style=flat-square)](https://github.com/vipulgupta2048/gitshot/actions)
-[![license](https://img.shields.io/github/license/vipulgupta2048/gitshot?style=flat-square)](https://github.com/vipulgupta2048/gitshot/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/gitshot?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/gitshot)
+[![downloads](https://img.shields.io/npm/dm/gitshot?style=for-the-badge&logo=npm&logoColor=white&color=1e1e2e)](https://www.npmjs.com/package/gitshot)
+[![license](https://img.shields.io/badge/license-MIT-a6e3a1?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/vipulgupta2048/gitshot/blob/master/LICENSE)
+[![node](https://img.shields.io/badge/node-%3E%3D22-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![zero deps](https://img.shields.io/badge/dependencies-0-cba6f7?style=for-the-badge&logo=packagephobia&logoColor=white)](https://packagephobia.com/result?p=gitshot)
+[![GitHub stars](https://img.shields.io/github/stars/vipulgupta2048/gitshot?style=for-the-badge&logo=github&logoColor=white&color=1e1e2e)](https://github.com/vipulgupta2048/gitshot)
 
 
 **Shot taken. PR updated. No browser needed.**
 
 Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
 
-<!-- TODO: Replace with actual demo GIF after recording with VHS -->
-<!-- <p align="center"><img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700"></p> -->
+<p align="center"><img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700"></p>
 
 ```bash
 $ npx gitshot rick.gif --pr 42
@@ -25,7 +26,7 @@ GitHub has **no API** for uploading images to issues, PRs, or comments. This has
 
 `gitshot` fixes this in one command.
 
-## Install
+## Install for Humans
 
 ```bash
 # Use directly with npx (zero install)
@@ -33,10 +34,23 @@ npx gitshot rick.gif
 
 # Install globally
 npm install -g gitshot
+```
 
-# As a gh CLI extension
+## Install for Agents
+
+Install the gitshot skill for Claude Code, Cursor, Copilot, Codex, and [40+ other agents](https://skills.sh):
+
+```bash
+npx skills add vipulgupta2048/gitshot
+```
+
+Once installed, your agent automatically knows when and how to use `gitshot` — just ask it to "attach a screenshot to the PR" or "upload an image to the issue."
+
+## Install as GitHub CLI Extension
+
+```bash
 gh extension install vipulgupta2048/gitshot
-gh shot rick.gif
+gh shot rick.gif --pr 42
 ```
 
 ## Usage
@@ -118,24 +132,7 @@ Get your free key at [api.imgbb.com](https://api.imgbb.com).
 gitshot --repo myorg/my-images rick.gif
 ```
 
-## Agent Skill
-
-Install the gitshot skill for Claude Code, Cursor, Copilot, Codex, and [40+ other agents](https://skills.sh):
-
-```bash
-npx skills add vipulgupta2048/gitshot
-```
-
-Once installed, your agent automatically knows when and how to use `gitshot` — just ask it to "attach a screenshot to the PR" or "upload an image to the issue."
-
-### GitHub CLI Extension
-
-```bash
-gh extension install vipulgupta2048/gitshot
-gh shot rick.gif --pr 42
-```
-
-### Agent-Friendly Design
+## Agent-Friendly Design
 
 | Feature | Detail |
 |---------|--------|
