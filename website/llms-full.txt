@@ -1,0 +1,196 @@
+# gitshot — Complete Documentation
+
+> Shot taken. PR updated. No browser needed.
+
+Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
+
+## The Problem
+
+GitHub has no API for uploading images to issues, PRs, or comments. This has been requested since 2020 (cli/cli#1895) — 5+ years with no resolution. The gh CLI's --body flag only accepts text. AI agents can take screenshots but can't attach them. gitshot fixes this in one command.
+
+## Installation
+
+### Use directly with npx (zero install)
+```
+npx gitshot rick.gif
+```
+
+### Install globally
+```
+npm install -g gitshot
+```
+
+### As a gh CLI extension
+```
+gh extension install vipulgupta2048/gitshot
+gh shot rick.gif
+```
+
+### Requirements
+- Node.js >= 22.0.0
+- Zero runtime dependencies (uses Node.js built-ins only)
+
+## Usage Examples
+
+### Upload a screenshot (auto-detects best backend)
+```
+gitshot rick.gif
+```
+Output: `![screenshot](https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png)`
+
+### Upload and comment on a PR
+```
+gitshot rick.gif | gh pr comment 42 --body-file -
+```
+
+### Upload and create an issue with an image
+```
+gitshot bug.png | gh issue create --title "Bug report" --body-file -
+```
+
+### Multiple images
+```
+gitshot before.png after.png
+```
+
+### Raw URL only (for scripting)
+```
+gitshot --raw rick.gif
+```
+
+### JSON output (for agents/LLMs)
+```
+gitshot --json rick.gif
+```
+Output: `{"url":"https://...","markdown":"![...](...)","backend":"release"}`
+
+### Use a specific backend
+```
+gitshot --backend catbox rick.gif
+```
+
+### Upload to a specific GitHub repo
+```
+gitshot --repo myorg/assets rick.gif
+```
+
+### Use Cloudinary
+```
+CLOUDINARY_URL=cloudinary://key:secret@cloud gitshot diagram.png
+```
+
+## CLI Reference
+
+```
+gitshot [flags] <image> [image...]
+
+Flags:
+  -b, --backend <name>    release | catbox | cloudinary | imgbb
+  -r, --raw               Output raw URL only
+      --json              Output JSON (machine-readable)
+      --repo <owner/repo> Target repo for release backend
+      --tag <name>        Release tag (default: _gitshot)
+  -v, --version           Print version
+  -h, --help              Show help with examples
+```
+
+## Backends
+
+### release (default)
+- Requires: gh CLI authenticated
+- Limits: 2GB per file
+- How it works: Creates a dedicated public repo (<you>/gitshot-images) and uploads images as GitHub Release Assets. URLs are permanent, hosted on GitHub infrastructure, and render in any GitHub markdown context. The repo is auto-created on first use.
+- Best for: Most reliable. Images stay on GitHub.
+
+### catbox (fallback)
+- Requires: Nothing
+- Limits: 200MB per file
+- How it works: Uploads to catbox.moe. Free, no signup required. 3 retries with exponential backoff.
+- Best for: No gh CLI available, quick uploads.
+
+### cloudinary
+- Requires: CLOUDINARY_URL environment variable
+- Limits: 25GB free tier
+- How it works: Signed uploads with SHA1 to Cloudinary CDN.
+- Best for: Production use, CDN, image transforms.
+
+### imgbb
+- Requires: IMGBB_API_KEY environment variable
+- Limits: 32MB per file
+- How it works: Base64 upload to imgbb API.
+- Best for: Simple free hosting.
+
+### Auto-detection order
+1. --backend flag (if set) → use that backend
+2. CLOUDINARY_URL env var → cloudinary
+3. IMGBB_API_KEY env var → imgbb
+4. gh CLI authenticated → release (creates <you>/gitshot-images)
+5. None of the above → catbox (always works, zero config)
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| CLOUDINARY_URL | cloudinary://API_KEY:API_SECRET@CLOUD_NAME |
+| IMGBB_API_KEY | API key from https://api.imgbb.com |
+| GITHUB_TOKEN | GitHub token (alternative to gh auth) |
+
+## Supported File Formats
+
+PNG, JPG, JPEG, GIF, SVG, WebP, BMP, ICO, TIFF, AVIF
+
+## Agent Integration
+
+gitshot is designed for AI agent workflows:
+
+| Feature | Detail |
+|---------|--------|
+| Zero config | `npx gitshot <file>` works with just gh auth |
+| Clean stdout | Only URLs/markdown to stdout. Logs to stderr. |
+| JSON mode | --json returns {"url", "markdown", "filename", "backend"} |
+| Composable | Pipe output to any gh command |
+| No prompts | Never asks for interactive input |
+| Exit codes | 0 = success, 1 = failure |
+
+### Install as an AI agent skill
+```
+npx skills add vipulgupta2048/gitshot
+```
+
+Once installed, the agent automatically knows when and how to use gitshot.
+
+### Common agent workflows
+
+Screenshot to PR comment:
+```
+screencapture -x /tmp/shot.png
+npx gitshot /tmp/shot.png | gh pr comment 42 --body-file -
+```
+
+Visual diff in PR:
+```
+BEFORE=$(npx gitshot --raw before.png)
+AFTER=$(npx gitshot --raw after.png)
+echo "| Before | After |\n|--------|-------|\n| ![]($BEFORE) | ![]($AFTER) |" | gh pr comment 42 --body-file -
+```
+
+Create issue with screenshot:
+```
+BODY=$(npx gitshot bug.png)
+gh issue create --title "UI Bug" --body "$BODY"
+```
+
+## Background
+
+This tool exists because of these long-standing issues:
+- cli/cli#1895 — Upload and Embed Files to PRs/Issues/Comments (2020, open 5+ years)
+- cli/cli#12960 — Support image/file attachments (critical for agentic workflows)
+- github/github-mcp-server#738 — Allow uploading files as attachments
+
+## Links
+
+- Source code: https://github.com/vipulgupta2048/gitshot
+- npm package: https://www.npmjs.com/package/gitshot
+- Issue tracker: https://github.com/vipulgupta2048/gitshot/issues
+- License: MIT
+- Author: Vipul Gupta <vipulgupta2048@gmail.com>

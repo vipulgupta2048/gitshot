@@ -1,0 +1,89 @@
+# gitshot
+
+> Upload images to GitHub issues, PRs, and discussions from the terminal.
+
+gitshot is a CLI tool that solves a fundamental gap in GitHub's ecosystem: there is no API for uploading images to issues or pull requests. The official GitHub CLI (gh) does not support this and has closed the feature request (cli/cli#1895, open since 2020).
+
+## Installation
+
+```
+npx gitshot image.png
+npm install -g gitshot
+```
+
+Requires Node.js 22+. Zero runtime dependencies.
+
+## Usage
+
+Upload an image (auto-detects best backend):
+```
+gitshot rick.gif
+```
+
+Upload and comment on a PR:
+```
+gitshot rick.gif | gh pr comment 42 --body-file -
+```
+
+Upload and create an issue with image:
+```
+gitshot bug.png | gh issue create --title "Bug" --body-file -
+```
+
+Multiple images:
+```
+gitshot before.png after.png
+```
+
+Raw URL only:
+```
+gitshot --raw rick.gif
+```
+
+JSON output (for AI agents):
+```
+gitshot --json rick.gif
+```
+
+## Backends
+
+- release: GitHub Releases (default). Uploads to <user>/gitshot-images repo as release assets. Permanent, CDN-backed URLs. Auto-creates repo on first use. Requires gh CLI authenticated.
+- catbox: Catbox.moe (fallback). Zero config, no signup, 200MB limit. Always works.
+- cloudinary: Cloudinary CDN. Set CLOUDINARY_URL env var. 25GB free tier.
+- imgbb: imgbb hosting. Set IMGBB_API_KEY env var. 32MB limit.
+
+Auto-detection order: --backend flag > CLOUDINARY_URL > IMGBB_API_KEY > gh CLI > catbox
+
+## Flags
+
+-b, --backend <name>    release | catbox | cloudinary | imgbb
+-r, --raw               Output raw URL only
+    --json              Output JSON
+    --repo <owner/repo> Target repo for release backend
+    --tag <name>        Release tag (default: _gitshot)
+-v, --version           Print version
+-h, --help              Show help
+
+## Environment Variables
+
+CLOUDINARY_URL    cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+IMGBB_API_KEY     API key from https://api.imgbb.com
+GITHUB_TOKEN      GitHub token (alternative to gh auth)
+
+## Agent Integration
+
+gitshot is designed for AI agent workflows:
+- stdout contains only URLs/markdown (pipe-safe)
+- stderr contains status logs
+- --json mode for structured output
+- No interactive prompts
+- Exit code 0 = success, 1 = failure
+
+Install as a skill: npx skills add vipulgupta2048/gitshot
+
+## Links
+
+- Source: https://github.com/vipulgupta2048/gitshot
+- npm: https://www.npmjs.com/package/gitshot
+- Issues: https://github.com/vipulgupta2048/gitshot/issues
+- Problem context: https://github.com/cli/cli/issues/1895

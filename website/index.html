@@ -58,7 +58,7 @@
         "name": "How do I upload an image to a GitHub issue from the terminal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Use gitshot: run 'npx gitshot screenshot.png' to upload the image and get a markdown URL. Pipe it to gh: 'gitshot screenshot.png | gh issue comment 42 --body-file -' to attach it directly to an issue."
+          "text": "Use gitshot: run 'npx gitshot rick.gif' to upload the image and get a markdown URL. Pipe it to gh: 'gitshot rick.gif | gh issue comment 42 --body-file -' to attach it directly to an issue."
         }
       },
       {
@@ -74,7 +74,7 @@
         "name": "How to attach screenshots to GitHub pull requests from the command line?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Install gitshot (npx gitshot or npm i -g gitshot) and run: 'gitshot screenshot.png | gh pr comment 42 --body-file -'. This uploads the image and posts it as a comment on the specified PR. gitshot works over SSH, in CI pipelines, and in Docker containers."
+          "text": "Install gitshot (npx gitshot or npm i -g gitshot) and run: 'gitshot rick.gif | gh pr comment 42 --body-file -'. This uploads the image and posts it as a comment on the specified PR. gitshot works over SSH, in CI pipelines, and in Docker containers."
         }
       },
       {
@@ -110,7 +110,7 @@
           <span class="terminal-title">Terminal</span>
         </div>
         <pre class="terminal-body"><span class="comment"># Upload a screenshot and comment on a PR</span>
-<span class="prompt">$</span> npx gitshot bug-screenshot.png
+<span class="prompt">$</span> npx gitshot bug-rick.gif
 <span class="output">Using release backend</span>
 <span class="output">![bug-screenshot](<span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/bug-screenshot-a3f2.png</span>)</span>
 
@@ -284,7 +284,7 @@
           <span class="terminal-title">Examples</span>
         </div>
         <pre class="terminal-body"><span class="comment"># Upload an image — returns markdown</span>
-<span class="prompt">$</span> gitshot screenshot.png
+<span class="prompt">$</span> gitshot rick.gif
 <span class="output">![screenshot](<span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png</span>)</span>
 
 <span class="comment"># Comment on a PR with the image</span>
@@ -294,15 +294,15 @@
 <span class="prompt">$</span> gitshot bug.png | gh issue create --title "Bug" --body-file -
 
 <span class="comment"># Raw URL for scripting</span>
-<span class="prompt">$</span> gitshot --raw screenshot.png
+<span class="prompt">$</span> gitshot --raw rick.gif
 <span class="output"><span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png</span></span>
 
 <span class="comment"># JSON output for AI agents</span>
-<span class="prompt">$</span> gitshot --json screenshot.png
+<span class="prompt">$</span> gitshot --json rick.gif
 <span class="output">{"url":"https://...","markdown":"![...](...)","backend":"release"}</span>
 
 <span class="comment"># Use a specific backend</span>
-<span class="prompt">$</span> gitshot --backend catbox screenshot.png
+<span class="prompt">$</span> gitshot --backend catbox rick.gif
 
 <span class="comment"># Multiple images</span>
 <span class="prompt">$</span> gitshot before.png after.png</pre>
@@ -316,7 +316,7 @@
       <div class="install-grid">
         <div class="install-card">
           <h3>Instant (npx)</h3>
-          <code>npx gitshot screenshot.png</code>
+          <code>npx gitshot rick.gif</code>
         </div>
         <div class="install-card">
           <h3>Global install</h3>
