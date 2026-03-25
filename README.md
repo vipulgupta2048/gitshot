@@ -4,7 +4,6 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/gitshot"><img src="https://img.shields.io/npm/v/gitshot?style=for-the-badge&logo=npm&logoColor=white&label=npm&color=f38ba8" alt="npm"></a>
-  <a href="https://www.npmjs.com/package/gitshot"><img src="https://img.shields.io/npm/dm/gitshot?style=for-the-badge&logo=npm&logoColor=white&label=downloads&color=b4befe" alt="downloads"></a>
   <a href="https://github.com/vipulgupta2048/gitshot/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-a6e3a1?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="license"></a>
   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D22-94e2d5?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="node"></a>
 </p>
