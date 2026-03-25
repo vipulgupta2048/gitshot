@@ -1,18 +1,22 @@
-# gitshot
+<p align="center">
+  <img src="logo.png" alt="gitshot" width="600">
+</p>
 
-[![npm](https://img.shields.io/npm/v/gitshot?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/gitshot)
-[![downloads](https://img.shields.io/npm/dm/gitshot?style=for-the-badge&logo=npm&logoColor=white&color=1e1e2e)](https://www.npmjs.com/package/gitshot)
-[![license](https://img.shields.io/badge/license-MIT-a6e3a1?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/vipulgupta2048/gitshot/blob/master/LICENSE)
-[![node](https://img.shields.io/badge/node-%3E%3D22-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org)
-[![zero deps](https://img.shields.io/badge/dependencies-0-cba6f7?style=for-the-badge&logo=packagephobia&logoColor=white)](https://packagephobia.com/result?p=gitshot)
-[![GitHub stars](https://img.shields.io/github/stars/vipulgupta2048/gitshot?style=for-the-badge&logo=github&logoColor=white&color=1e1e2e)](https://github.com/vipulgupta2048/gitshot)
+<p align="center">
+  <a href="https://www.npmjs.com/package/gitshot"><img src="https://img.shields.io/npm/v/gitshot?style=for-the-badge&logo=npm&logoColor=white&label=npm&color=f38ba8" alt="npm"></a>
+  <a href="https://www.npmjs.com/package/gitshot"><img src="https://img.shields.io/npm/dm/gitshot?style=for-the-badge&logo=npm&logoColor=white&label=downloads&color=b4befe" alt="downloads"></a>
+  <a href="https://github.com/vipulgupta2048/gitshot/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-a6e3a1?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="license"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D22-94e2d5?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="node"></a>
+</p>
 
+<p align="center">
+  <b>Shot taken. PR updated. No browser needed.</b><br>
+  <sub>Zero-config, agent-first CLI to upload images to issues, PRs, and comments.</sub>
+</p>
 
-**Shot taken. PR updated. No browser needed.**
-
-Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
-
-<p align="center"><img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700"></p>
+<p align="center">
+  <img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700">
+</p>
 
 ```bash
 $ npx gitshot rick.gif --pr 42
