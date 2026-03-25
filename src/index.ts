@@ -12,7 +12,7 @@ import { ReleaseUploader, isGhAvailable, isGhAuthenticated } from "./release.js"
 import { commentOnPR, commentOnIssue, createIssue, detectCurrentPR } from "./github.js";
 import { Spinner } from "./spinner.js";
 
-const VERSION = "0.1.0";
+const VERSION = "0.0.1";
 
 // ── Color helpers ───────────────────────────────────────────────
 const c = (code: number, text: string) => `\x1b[38;5;${code}m${text}\x1b[0m`;

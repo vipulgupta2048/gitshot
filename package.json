@@ -1,6 +1,6 @@
 {
   "name": "gitshot",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.",
   "type": "module",
   "bin": {

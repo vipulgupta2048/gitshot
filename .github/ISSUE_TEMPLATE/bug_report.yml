@@ -34,7 +34,7 @@ body:
     attributes:
       label: gitshot version
       description: Output of `gitshot --version`
-      placeholder: "gitshot v0.1.0"
+      placeholder: "gitshot v0.0.1"
     validations:
       required: true
 

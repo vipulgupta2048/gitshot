@@ -44,9 +44,9 @@ export const GitshotDemo: React.FC = () => {
       <Audio src={staticFile('audio/bg-track.mp3')} volume={bgVolume} />
 
       {/* Act 1: "It's 2026" typing + pills + X stamp */}
-      <Sequence from={20}><Audio src={staticFile('audio/key-click.mp3')} volume={0.25} /></Sequence>
-      <Sequence from={120}><Audio src={staticFile('audio/typing-burst.mp3')} volume={0.15} /></Sequence>
-      <Sequence from={185}><Audio src={staticFile('audio/stamp-impact.mp3')} volume={0.5} /></Sequence>
+      <Sequence from={12}><Audio src={staticFile('audio/key-click.mp3')} volume={0.25} /></Sequence>
+      <Sequence from={130}><Audio src={staticFile('audio/typing-burst.mp3')} volume={0.15} /></Sequence>
+      <Sequence from={190}><Audio src={staticFile('audio/stamp-impact.mp3')} volume={0.5} /></Sequence>
 
       {/* Act 2: Brand reveal + terminal demo */}
       <Sequence from={218}><Audio src={staticFile('audio/whoosh.mp3')} volume={0.25} /></Sequence>
@@ -129,7 +129,7 @@ export const GitshotDemo: React.FC = () => {
       <Vignette />
 
       {/* Screen flashes on impacts */}
-      <ScreenFlash triggerFrame={185} duration={3} opacity={0.12} />
+      <ScreenFlash triggerFrame={190} duration={3} opacity={0.12} />
       <ScreenFlash triggerFrame={218} duration={4} opacity={0.06} />
       <ScreenFlash triggerFrame={490} duration={3} opacity={0.04} />
       <ScreenFlash triggerFrame={725} duration={4} opacity={0.06} />

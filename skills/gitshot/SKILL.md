@@ -5,7 +5,7 @@ license: MIT
 argument-hint: <image-path>
 metadata:
   author: vipulgupta2048
-  version: 0.1.0
+  version: 0.0.1
 ---
 
 # gitshot — Upload Images to GitHub
