@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <b>Shot taken. PR updated. No browser needed.</b><br>
+  <b>Screenshots uploaded on GitHub, no browser needed.</b><br>
   <sub>Zero-config, agent-first CLI to upload images to issues, PRs, and comments.</sub>
 </p>
 
