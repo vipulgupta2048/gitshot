@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # gh-shot — GitHub CLI extension wrapper for gitshot
 # Install: gh extension install vipulgupta2048/gitshot
-# Usage:   gh shot screenshot.png
+# Usage:   gh shot rick.gif
 
 set -euo pipefail
 

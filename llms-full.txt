@@ -1,8 +1,8 @@
 # gitshot — Complete Documentation
 
-> One command. Image in your PR.
+> Shot taken. PR updated. No browser needed.
 
-Upload images from the terminal and get markdown-ready URLs for GitHub issues, PRs, and comments. Auto-detects the best backend. Built for AI agents and humans.
+Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
 
 ## The Problem
 
@@ -12,7 +12,7 @@ GitHub has no API for uploading images to issues, PRs, or comments. This has bee
 
 ### Use directly with npx (zero install)
 ```
-npx gitshot screenshot.png
+npx gitshot rick.gif
 ```
 
 ### Install globally
@@ -23,7 +23,7 @@ npm install -g gitshot
 ### As a gh CLI extension
 ```
 gh extension install vipulgupta2048/gitshot
-gh shot screenshot.png
+gh shot rick.gif
 ```
 
 ### Requirements
@@ -34,13 +34,13 @@ gh shot screenshot.png
 
 ### Upload a screenshot (auto-detects best backend)
 ```
-gitshot screenshot.png
+gitshot rick.gif
 ```
 Output: `![screenshot](https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png)`
 
 ### Upload and comment on a PR
 ```
-gitshot screenshot.png | gh pr comment 42 --body-file -
+gitshot rick.gif | gh pr comment 42 --body-file -
 ```
 
 ### Upload and create an issue with an image
@@ -55,23 +55,23 @@ gitshot before.png after.png
 
 ### Raw URL only (for scripting)
 ```
-gitshot --raw screenshot.png
+gitshot --raw rick.gif
 ```
 
 ### JSON output (for agents/LLMs)
 ```
-gitshot --json screenshot.png
+gitshot --json rick.gif
 ```
 Output: `{"url":"https://...","markdown":"![...](...)","backend":"release"}`
 
 ### Use a specific backend
 ```
-gitshot --backend catbox screenshot.png
+gitshot --backend catbox rick.gif
 ```
 
 ### Upload to a specific GitHub repo
 ```
-gitshot --repo myorg/assets screenshot.png
+gitshot --repo myorg/assets rick.gif
 ```
 
 ### Use Cloudinary

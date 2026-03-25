@@ -17,12 +17,12 @@ Requires Node.js 22+. Zero runtime dependencies.
 
 Upload an image (auto-detects best backend):
 ```
-gitshot screenshot.png
+gitshot rick.gif
 ```
 
 Upload and comment on a PR:
 ```
-gitshot screenshot.png | gh pr comment 42 --body-file -
+gitshot rick.gif | gh pr comment 42 --body-file -
 ```
 
 Upload and create an issue with image:
@@ -37,12 +37,12 @@ gitshot before.png after.png
 
 Raw URL only:
 ```
-gitshot --raw screenshot.png
+gitshot --raw rick.gif
 ```
 
 JSON output (for AI agents):
 ```
-gitshot --json screenshot.png
+gitshot --json rick.gif
 ```
 
 ## Backends
