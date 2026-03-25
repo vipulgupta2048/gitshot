@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gitshot — Images in GitHub, straight from your terminal</title>
+  <meta name="description" content="Upload images to GitHub issues, PRs, and comments from your terminal. 4 backends, zero runtime dependencies. Works over SSH and in CI.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="gitshot — Images in GitHub, straight from your terminal">
+  <meta property="og:description" content="Upload images to GitHub issues, PRs, and comments from your terminal. Zero dependencies. Works over SSH and in CI.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vipulgupta2048.github.io/gitshot/">
+  <meta property="og:image" content="https://vipulgupta2048.github.io/gitshot/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="gitshot — Images in GitHub, straight from your terminal">
+  <meta name="twitter:description" content="Upload images to GitHub issues, PRs, and comments from your terminal. Zero dependencies.">
+  <meta name="twitter:image" content="https://vipulgupta2048.github.io/gitshot/og-image.png">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://vipulgupta2048.github.io/gitshot/">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "gitshot",
+    "description": "CLI tool to upload images to GitHub issues, PRs, and comments from the terminal. 4 backends, zero runtime dependencies, works over SSH and in CI.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "macOS, Linux, Windows",
+    "url": "https://github.com/vipulgupta2048/gitshot",
+    "downloadUrl": "https://www.npmjs.com/package/gitshot",
+    "softwareVersion": "0.1.0",
+    "license": "https://opensource.org/licenses/MIT",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Vipul Gupta",
+      "url": "https://github.com/vipulgupta2048"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I upload an image to a GitHub issue from the terminal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use gitshot: run 'npx gitshot screenshot.png' to upload the image and get a markdown URL. Pipe it to gh: 'gitshot screenshot.png | gh issue comment 42 --body-file -' to attach it directly to an issue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can GitHub CLI upload images to issues or pull requests?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The GitHub CLI (gh) does not support uploading images to issues, PRs, or comments. This feature was requested in 2020 (issue #1895) but closed as 'not planned'. GitHub's upload endpoint requires browser session cookies, not API tokens. gitshot works around this limitation by using GitHub Releases as an image backend."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How to attach screenshots to GitHub pull requests from the command line?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Install gitshot (npx gitshot or npm i -g gitshot) and run: 'gitshot screenshot.png | gh pr comment 42 --body-file -'. This uploads the image and posts it as a comment on the specified PR. gitshot works over SSH, in CI pipelines, and in Docker containers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What image upload backends does gitshot support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "gitshot supports 4 backends: GitHub Releases (default, permanent URLs), Catbox.moe (zero config fallback), Cloudinary (CDN with free tier), and imgbb (simple free hosting). It auto-detects the best available backend based on your environment."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <h1 class="hero-logo mono">git<span class="accent">shot</span></h1>
+      <p class="hero-tagline">Screenshots belong in issues, not in your browser. Upload images to GitHub from your terminal.</p>
+      <div class="hero-cta">
+        <a href="#install" class="btn btn-primary">Install</a>
+        <a href="https://github.com/vipulgupta2048/gitshot" class="btn btn-secondary">View on GitHub</a>
+      </div>
+
+      <!-- Terminal demo -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-title">Terminal</span>
+        </div>
+        <pre class="terminal-body"><span class="comment"># Upload a screenshot and comment on a PR</span>
+<span class="prompt">$</span> npx gitshot bug-screenshot.png
+<span class="output">Using release backend</span>
+<span class="output">![bug-screenshot](<span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/bug-screenshot-a3f2.png</span>)</span>
+
+<span class="comment"># Pipe it directly into a PR comment</span>
+<span class="prompt">$</span> gitshot fix.png | gh pr comment 42 --body-file -
+<span class="output">Using release backend</span>
+<span class="output">https://github.com/cli/cli/pull/42#issuecomment-123456</span></pre>
+      </div>
+    </div>
+  </header>
+
+  <!-- Trust block -->
+  <div class="trust">
+    <span class="pill"><span class="dot"></span> Zero dependencies</span>
+    <span class="pill"><span class="dot"></span> Works with gh CLI</span>
+    <span class="pill"><span class="dot"></span> Agent-friendly</span>
+    <span class="pill"><span class="dot"></span> MIT License</span>
+  </div>
+
+  <main class="container">
+
+    <!-- Problem -->
+    <section id="problem">
+      <h2 class="section-title">The problem</h2>
+      <div class="problem-text">
+        <p>GitHub has <strong>no API</strong> for uploading images to issues or PRs. The feature request has been <a href="https://github.com/cli/cli/issues/1895">open since 2020</a>. The <code>gh</code> CLI team closed it. The upload endpoint requires browser session cookies, not API tokens.</p>
+        <br>
+        <p>If you work in the terminal — over SSH, in CI, in a container — there's no way to attach a screenshot to an issue without opening a browser. <strong>gitshot fixes that.</strong></p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-subtitle">Three steps, one command. Uses the official GitHub Releases API — no browser automation, no undocumented endpoints.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-title">Run gitshot</div>
+          <div class="step-desc">Pass your image file. gitshot detects the best upload backend automatically — GitHub Releases if you have <code>gh</code> authenticated, or Catbox.moe as a zero-config fallback.</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-title">Image uploaded</div>
+          <div class="step-desc">Your image is uploaded as a GitHub Release asset to a dedicated <code>gitshot-images</code> repo (auto-created on first use). The URL is permanent and CDN-backed.</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-title">Markdown returned</div>
+          <div class="step-desc">The markdown image link is printed to stdout. Pipe it into <code>gh pr comment</code>, <code>gh issue create</code>, or use it anywhere GitHub renders markdown.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <h2 class="section-title">Features</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-title">Zero dependencies</div>
+          <div class="feature-desc">Uses only Node.js built-ins: fetch, crypto, fs, child_process. No axios, no node-fetch. npm install is instant.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">4 upload backends</div>
+          <div class="feature-desc">GitHub Releases (default), Catbox.moe (fallback), Cloudinary (CDN), imgbb (free). Auto-detects the best available option.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Agent-friendly</div>
+          <div class="feature-desc">Clean stdout (URLs only), stderr for logs, --json mode, no interactive prompts. Built for Claude, Cursor, Copilot, and any AI agent.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Works over SSH</div>
+          <div class="feature-desc">No browser, no display server, no Xvfb. Works in SSH sessions, Docker containers, Codespaces, and any CI/CD pipeline.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Composable</div>
+          <div class="feature-desc">Pipe output into any gh command. <code>gitshot img.png | gh pr comment 42 --body-file -</code></div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">10 image formats</div>
+          <div class="feature-desc">PNG, JPG, JPEG, GIF, SVG, WebP, BMP, ICO, TIFF, AVIF. Auto-detected from file extension.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section id="comparison">
+      <h2 class="section-title">Comparison</h2>
+      <p class="section-subtitle">How gitshot compares to existing approaches.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>gitshot</th>
+              <th>gh-attach</th>
+              <th>GHPic</th>
+              <th>Manual upload</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Zero dependencies</td>
+              <td class="check">Yes</td>
+              <td class="cross">Playwright</td>
+              <td class="cross">Raycast</td>
+              <td class="check">N/A</td>
+            </tr>
+            <tr>
+              <td>No browser needed</td>
+              <td class="check">Yes</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+            </tr>
+            <tr>
+              <td>Works over SSH</td>
+              <td class="check">Yes</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+            </tr>
+            <tr>
+              <td>Works in CI</td>
+              <td class="check">Yes</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+            </tr>
+            <tr>
+              <td>Cross-platform</td>
+              <td class="check">Yes</td>
+              <td>Partial</td>
+              <td class="cross">macOS only</td>
+              <td class="check">Yes</td>
+            </tr>
+            <tr>
+              <td>Agent-friendly</td>
+              <td class="check">Yes</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+              <td class="cross">No</td>
+            </tr>
+            <tr>
+              <td>Multiple backends</td>
+              <td class="check">4 backends</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="cross">Manual</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td class="check">Active</td>
+              <td class="cross">Archived</td>
+              <td>Active</td>
+              <td class="check">N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Usage examples -->
+    <section id="usage">
+      <h2 class="section-title">Usage</h2>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-title">Examples</span>
+        </div>
+        <pre class="terminal-body"><span class="comment"># Upload an image — returns markdown</span>
+<span class="prompt">$</span> gitshot screenshot.png
+<span class="output">![screenshot](<span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png</span>)</span>
+
+<span class="comment"># Comment on a PR with the image</span>
+<span class="prompt">$</span> gitshot fix.png | gh pr comment 42 --body-file -
+
+<span class="comment"># Create an issue with a screenshot</span>
+<span class="prompt">$</span> gitshot bug.png | gh issue create --title "Bug" --body-file -
+
+<span class="comment"># Raw URL for scripting</span>
+<span class="prompt">$</span> gitshot --raw screenshot.png
+<span class="output"><span class="url">https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png</span></span>
+
+<span class="comment"># JSON output for AI agents</span>
+<span class="prompt">$</span> gitshot --json screenshot.png
+<span class="output">{"url":"https://...","markdown":"![...](...)","backend":"release"}</span>
+
+<span class="comment"># Use a specific backend</span>
+<span class="prompt">$</span> gitshot --backend catbox screenshot.png
+
+<span class="comment"># Multiple images</span>
+<span class="prompt">$</span> gitshot before.png after.png</pre>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section id="install">
+      <h2 class="section-title">Install</h2>
+      <p class="section-subtitle">Three ways to get started.</p>
+      <div class="install-grid">
+        <div class="install-card">
+          <h3>Instant (npx)</h3>
+          <code>npx gitshot screenshot.png</code>
+        </div>
+        <div class="install-card">
+          <h3>Global install</h3>
+          <code>npm install -g gitshot</code>
+        </div>
+        <div class="install-card">
+          <h3>gh CLI extension</h3>
+          <code>gh extension install vipulgupta2048/gitshot</code>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        <a href="https://github.com/vipulgupta2048/gitshot">GitHub</a> &middot;
+        <a href="https://www.npmjs.com/package/gitshot">npm</a> &middot;
+        <a href="https://github.com/vipulgupta2048/gitshot/issues">Issues</a>
+      </p>
+      <p style="margin-top: 8px;">MIT License &middot; Built by <a href="https://github.com/vipulgupta2048">Vipul Gupta</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

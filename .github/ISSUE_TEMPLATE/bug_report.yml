@@ -1,0 +1,67 @@
+name: Bug Report
+description: Report a bug with gitshot
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly and concisely.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What commands did you run?
+      placeholder: |
+        1. Run `gitshot screenshot.png`
+        2. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: gitshot version
+      description: Output of `gitshot --version`
+      placeholder: "gitshot v0.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: backend
+    attributes:
+      label: Backend used
+      options:
+        - release (GitHub Releases)
+        - catbox (catbox.moe)
+        - cloudinary
+        - imgbb
+        - auto-detected (not sure)
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS and Node.js version
+      placeholder: "macOS 15.3, Node 22.12.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Paste the full terminal output (stderr messages).
+      render: shell

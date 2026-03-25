@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# gh-shot — GitHub CLI extension wrapper for gitshot
+# Install: gh extension install vipulgupta2048/gitshot
+# Usage:   gh shot screenshot.png
+
+set -euo pipefail
+
+# Check if gitshot is available globally
+if command -v gitshot &>/dev/null; then
+  exec gitshot "$@"
+fi
+
+# Check if we're running from the extension directory (gh extension install)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/dist/index.js" ]; then
+  exec node "$SCRIPT_DIR/dist/index.js" "$@"
+fi
+
+# Fallback to npx
+exec npx --yes gitshot "$@"

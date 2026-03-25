@@ -1,0 +1,49 @@
+{
+  "name": "gitshot",
+  "version": "0.1.0",
+  "description": "One command. Image in your PR. Upload images and get markdown-ready URLs for GitHub issues, PRs, and comments.",
+  "type": "module",
+  "bin": {
+    "gitshot": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "gh-shot",
+    "llms.txt",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "github",
+    "image",
+    "upload",
+    "screenshot",
+    "cli",
+    "pr",
+    "issue",
+    "markdown",
+    "agent",
+    "llm",
+    "copilot",
+    "claude",
+    "agentic"
+  ],
+  "author": "Vipul Gupta <vipulgupta2048@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vipulgupta2048/gitshot.git"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.4.0"
+  }
+}
