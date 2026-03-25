@@ -1,12 +1,12 @@
 # gitshot — Launch Copy
 
-All marketing copy for launch day. Non-cringy, developer-authentic.
+All marketing copy for launch day.
 
 ---
 
 ## GitHub Repo Description
 
-Upload images to GitHub issues, PRs, and comments from your terminal. 4 backends (GitHub Releases, Catbox, Cloudinary, imgbb). Zero runtime dependencies. Agent-friendly. Works over SSH and in CI.
+Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
 
 ## GitHub Topics
 
@@ -18,83 +18,88 @@ github, cli, images, screenshots, terminal, developer-tools, nodejs, typescript,
 
 I spent the weekend building a CLI tool that GitHub probably should have built five years ago.
 
-The problem: GitHub has no API for uploading images to issues, PRs, or comments. The GitHub CLI team closed the feature request (#1895) because their upload endpoint requires browser session cookies, not API tokens. There's literally no programmatic way to do it.
-
-If you file GitHub issues with screenshots (and you should), you know the pain: take screenshot, open browser, navigate to issue, drag image, wait for upload, copy URL, go back to terminal.
+The problem: GitHub has no API for uploading images to issues, PRs, or comments. The gh CLI team closed the feature request (#1895) — the upload endpoint requires browser cookies, not API tokens. There's no programmatic way to do it.
 
 gitshot fixes this:
 
-npx gitshot screenshot.png
+$ npx gitshot rick.gif --pr 42
+✓ Uploaded rick.gif
+✓ Commented on PR #42
 
-One command. Image uploaded to GitHub Releases (permanent, CDN-backed URL), markdown printed to stdout. Pipe it into gh pr comment or gh issue create.
+One command. Image uploaded to GitHub Releases (permanent URL), posted as a PR comment. No browser, no Playwright, no browser cookies.
 
-The technical approach:
-- Uses the official GitHub Releases API (not the undocumented upload endpoint)
-- 4 upload backends (GitHub Releases, Catbox, Cloudinary, imgbb)
-- Zero runtime dependencies — just Node.js built-ins
-- Agent-friendly: clean stdout, stderr logging, --json mode
-- Works over SSH, in CI/CD, in containers — anywhere with a terminal
+What makes it different:
+→ Upload AND post to PRs/issues in one command (--pr, --issue, --new-issue)
+→ Auto-detects PR from current branch (just --pr, no number needed)
+→ 4 upload backends (GitHub Releases, Catbox, Cloudinary, imgbb)
+→ Zero runtime npm dependencies — just Node.js built-ins
+→ Agent-first: clean stdout, --json mode, spinner on stderr
+→ Works over SSH, in CI/CD, in containers — anywhere with a terminal
 
-Built it because I needed it. Open sourced it because everyone else does too.
+Built it because AI coding agents (Claude Code, Copilot, Codex) can take screenshots but have no way to attach them to PRs. Now they can:
 
-MIT license. TypeScript. npm install -g gitshot.
+npx skills add vipulgupta2048/gitshot
 
-github.com/vipulgupta2048/gitshot
+Shot taken. PR updated. No browser needed.
 
-#opensource #cli #github #devtools #typescript
+MIT license. TypeScript. github.com/vipulgupta2048/gitshot
+
+#opensource #cli #github #devtools #typescript #ai
 
 ---
 
 ## Show HN
 
 ### Title
-Show HN: Gitshot – Upload images to GitHub issues and PRs from the terminal
+Show HN: Gitshot – Upload images to GitHub PRs and issues from the terminal
 
 ### Body
-GitHub CLI can't upload images. Issue #1895 has been open since 2020, closed as "not planned." The upload endpoint requires browser session cookies, not OAuth tokens.
+GitHub CLI can't upload images. Issue #1895 has been open since 2020, closed as "not planned." The upload endpoint requires browser cookies, not OAuth tokens.
 
-gitshot is a Node.js CLI that works around this by using GitHub Releases as an image backend:
+gitshot is a zero-dep Node.js CLI that fixes this:
 
-    npx gitshot screenshot.png
+    $ npx gitshot rick.gif --pr 42
+    ✓ Uploaded rick.gif
+    ✓ Commented on PR #42
 
-It auto-creates a gitshot-images repo under your account, uploads the image as a release asset (permanent, CDN-backed URL), and prints markdown to stdout. Pipe it into gh pr comment or gh issue create.
+One command: uploads the image as a GitHub Release asset (permanent URL), then posts it as a PR comment. No piping needed.
 
-4 backends (GitHub Releases, Catbox.moe, Cloudinary, imgbb), zero runtime dependencies, works over SSH and in CI. Designed to be agent-friendly: clean stdout, stderr for logs, --json mode, pipes into gh commands.
+    $ gitshot rick.gif --issue 10 -m "Here's the bug"
+    $ gitshot rick.gif --new-issue "Button is broken"
+    $ gitshot rick.gif --pr   # auto-detects PR from branch
 
-What it won't do:
-- Use the undocumented uploads.github.com endpoint (could break anytime)
-- Require browser automation (no Playwright)
-- Need any deps beyond Node.js 22+
+4 backends (GitHub Releases, Catbox.moe, Cloudinary, imgbb). Zero runtime dependencies. Agent-first design: --json mode, clean stdout, spinner on stderr, no interactive prompts.
+
+Works over SSH, in CI, in Docker. Built because AI coding agents can take screenshots but have no way to attach them to PRs.
 
 Repo: https://github.com/vipulgupta2048/gitshot
-
-Happy to discuss the technical approach and trade-offs.
 
 ---
 
 ## Reddit r/commandline
 
 ### Title
-gitshot - upload images to GitHub issues/PRs from the terminal (because gh can't)
+gitshot — upload images to GitHub issues/PRs from the terminal, in one command
 
 ### Body
-GitHub CLI has been around since 2020 and it still can't upload images to issues or PRs. The team closed the feature request — the upload endpoint needs browser cookies, not API tokens. No API exists for it.
+GitHub CLI has been around since 2020 and still can't upload images. The team closed the feature request — the upload endpoint needs browser cookies, not API tokens.
 
 Built gitshot to fix this:
 
-    npx gitshot screenshot.png
+    $ npx gitshot rick.gif --pr 42
+    ✓ Uploaded rick.gif
+    ✓ Commented on PR #42
 
-How it works: uploads your image as a GitHub Release asset (permanent, CDN-backed URL), prints markdown to stdout. Pipe it into `gh pr comment` or `gh issue create`.
+How it works: uploads your image as a GitHub Release asset, then posts it as a comment on the PR/issue. One command, no piping.
 
-4 backends: GitHub Releases (default), Catbox.moe (zero config), Cloudinary (CDN), imgbb (free). Auto-detects the best one.
+    --pr [N]           comment on PR (auto-detects from branch)
+    --issue N          comment on issue
+    --new-issue "T"    create new issue with image
+    -m "caption"       add a message
 
-Zero runtime dependencies. Works over SSH, in CI, in Docker. Agent-friendly (clean stdout, --json mode, no interactive prompts).
-
-MIT license. TypeScript, Node 22+.
+4 backends: GitHub Releases (default), Catbox.moe (zero config), Cloudinary (CDN), imgbb (free). Zero runtime deps. Works over SSH, in CI, in Docker.
 
 github.com/vipulgupta2048/gitshot
-
-What would make this useful for your workflow?
 
 ---
 
@@ -104,17 +109,17 @@ What would make this useful for your workflow?
 GitHub has no API for uploading images to issues. I built a CLI to fix that.
 
 ### Body
-For 5+ years, developers have been asking GitHub to support image uploads in the CLI (cli/cli#1895). The gh team closed it — the upload endpoint requires browser cookies, not API tokens.
+For 5+ years, developers have asked GitHub to support image uploads in the CLI (cli/cli#1895). Closed as "not planned."
 
-gitshot works around this by using GitHub Releases as an image backend:
+gitshot works around this:
 
-    npx gitshot screenshot.png | gh issue comment 42 --body-file -
+    $ npx gitshot rick.gif --pr 42
+    ✓ Uploaded rick.gif
+    ✓ Commented on PR #42
 
-It auto-creates a <user>/gitshot-images repo, uploads images as release assets (permanent URLs, CDN-backed), and outputs markdown to stdout.
+Uploads images as GitHub Release assets (permanent URLs), then posts them to PRs/issues. One command. Also supports --issue, --new-issue, and -m for captions.
 
-4 backends (GitHub Releases, Catbox.moe, Cloudinary, imgbb). Zero runtime deps. Works over SSH and in CI. --json mode for AI agents.
-
-TypeScript, MIT license.
+Zero runtime deps. 4 backends. Agent-first design (--json, clean stdout, no prompts). Works everywhere including SSH and CI.
 
 https://github.com/vipulgupta2048/gitshot
 
@@ -123,21 +128,19 @@ https://github.com/vipulgupta2048/gitshot
 ## Reddit r/node
 
 ### Title
-gitshot — Zero-dep Node.js CLI to upload images to GitHub issues/PRs
+gitshot — Zero-dep Node.js CLI to upload images to GitHub PRs/issues in one command
 
 ### Body
-Built a CLI tool that uploads images to GitHub and returns markdown-ready URLs. Uses only Node.js 22+ built-ins (fetch, crypto, fs, child_process) — zero runtime dependencies.
+Built a CLI that uploads images to GitHub and posts them to PRs/issues. Uses only Node.js 22+ built-ins (fetch, crypto, fs, child_process) — zero runtime dependencies.
 
-    npx gitshot screenshot.png
-    # -> ![screenshot](https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png)
+    $ npx gitshot rick.gif --pr 42
+    ✓ Uploaded rick.gif
+    ✓ Commented on PR #42
 
-4 upload backends with auto-detection:
-1. GitHub Releases (if gh CLI authenticated)
-2. Cloudinary (if CLOUDINARY_URL set)
-3. imgbb (if IMGBB_API_KEY set)
-4. Catbox.moe (fallback, always works)
+    $ gitshot rick.gif --issue 10 -m "Here's the bug"
+    $ gitshot rick.gif --new-issue "UI is broken"
 
-Designed for piping: `gitshot img.png | gh pr comment 42 --body-file -`
+4 upload backends with auto-detection. Spinner UX on stderr, clean stdout for piping. --json mode for agents.
 
 GitHub doesn't have an API for uploading images to issues/PRs (cli/cli#1895, open since 2020). This is my workaround.
 
@@ -148,11 +151,11 @@ Source: https://github.com/vipulgupta2048/gitshot
 ## Social Card Text
 
 Large text: gitshot
-Subtitle: Images in GitHub, straight from your terminal.
+Subtitle: Shot taken. PR updated. No browser needed.
 Terminal mockup:
-  $ npx gitshot bug.png --issue 42
-  ✓ Uploaded -> github.com/.../bug-a3f2.png
-  ✓ Markdown copied to clipboard
+  $ npx gitshot rick.gif --pr 42
+  ✓ Uploaded rick.gif
+  ✓ Commented on PR #42
 Bottom: MIT License | github.com/vipulgupta2048/gitshot
 
 ---
@@ -161,7 +164,7 @@ Bottom: MIT License | github.com/vipulgupta2048/gitshot
 
 | Time | Channel | Content |
 |------|---------|---------|
-| 9am IST | Twitter/X | Launch thread (10 tweets) |
+| 9am IST | Twitter/X | Long-form launch tweet (Premium) |
 | 10am IST | Hacker News | Show HN post |
 | 11am IST | LinkedIn | Professional post |
 | 12pm IST | Reddit r/commandline | CLI-focused post |

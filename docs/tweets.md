@@ -1,145 +1,122 @@
-# gitshot Launch Thread — Twitter/X
-
-Post as a thread from @vipulgupta2048. Stagger replies 2-3 minutes apart.
+# gitshot Launch — Twitter/X
 
 ---
 
-## Tweet 1 — Hook
+## Long-form Launch Tweet (Premium)
 
-I built gitshot because in 2026 there's still no way to upload an image to a GitHub issue from the terminal.
+I built gitshot because it's 2026 and there's still no way to upload an image to a GitHub issue from the terminal.
 
-No, really. The gh CLI team closed the request. The API doesn't support it.
+The gh CLI team closed the request. Twice. Issue #1895 has been open since 2020. 32+ thumbs up. "Not planned."
 
-So here we are.
+So I built it myself.
 
-npx gitshot screenshot.png
+$ npx gitshot rick.gif --pr 42
+⠋ Uploading rick.gif...
+✓ Uploaded rick.gif
+⠋ Commenting on PR #42...
+✓ Commented on PR #42
+
+That's it. One command. Image uploaded. PR commented. No browser. No Playwright. No extensions.
+
+How it works:
+→ Auto-creates a gitshot-images repo under your GitHub account
+→ Uploads images as Release Assets (permanent URLs, on GitHub infra)
+→ Comments on PRs, issues, or creates new issues — all in one command
+→ Falls back to catbox.moe if you don't have gh CLI
+→ Zero runtime npm dependencies. Just Node.js built-ins.
+
+Built for the AI agent era. Claude Code, Copilot, Cursor — they can all use this:
+
+$ npx gitshot rick.gif --issue 10 -m "Here's the bug"
+$ npx gitshot rick.gif --new-issue "UI is broken"
+$ npx gitshot rick.gif --pr  ← auto-detects PR from branch
+$ npx skills add vipulgupta2048/gitshot  ← installs the agent skill
+
+--json mode for structured output. Clean stdout for piping. Spinner on stderr. Works over SSH, in CI, in Docker, in Codespaces.
+
+Shot taken. PR updated. No browser needed.
 
 github.com/vipulgupta2048/gitshot
 
+[attach rick.gif demo / terminal recording]
+
 ---
 
-## Tweet 2 — Problem
+## Thread version (if you prefer)
 
-GitHub CLI can create issues, manage PRs, trigger workflows, and deploy releases.
+### Tweet 1 — Hook
+
+I built gitshot because it's 2026 and there's still no way to upload an image to a GitHub issue from the terminal.
+
+The gh CLI team closed the request. Twice.
+
+So here we are:
+
+$ npx gitshot rick.gif --pr 42
+✓ Uploaded rick.gif
+✓ Commented on PR #42
+
+github.com/vipulgupta2048/gitshot
+
+### Tweet 2 — The problem
+
+GitHub CLI can create issues, manage PRs, trigger workflows, deploy releases.
 
 It cannot upload a single screenshot.
 
-Issue #1895 has been open since 2020. 32+ thumbs up. Closed. "Not planned."
+Issue #1895: open since 2020. 32+ thumbs up. Closed as "Not planned."
 
 github.com/cli/cli/issues/1895
 
----
+### Tweet 3 — One command
 
-## Tweet 3 — Demo
+Old way:
+$ gitshot img.png | gh pr comment 42 --body-file -
 
-The whole workflow:
+New way:
+$ gitshot rick.gif --pr 42
 
-$ npx gitshot bug.png
--> Uploaded to GitHub Releases
--> Markdown URL printed to stdout
+One command. Upload + comment. No piping.
 
-Pipe it:
-$ gitshot bug.png | gh issue comment 42 --body-file -
+Also:
+--issue 10 → comment on issue
+--new-issue "Bug" → create issue with image
+--pr → auto-detect PR from branch
+-m "caption" → add a message
 
-No browser. No Playwright. No extensions.
+### Tweet 4 — Agent-first
 
-[attach demo GIF]
+Built for AI agents:
 
----
+$ npx gitshot rick.gif --pr 42 -m "Here's the fix"
+⠋ Uploading rick.gif...
+✓ Uploaded rick.gif
+⠋ Commenting on PR #42...
+✓ Commented on PR #42
 
-## Tweet 4 — Zero deps
+Clean stdout. Spinner on stderr. --json mode. No prompts.
 
-gitshot has zero runtime dependencies.
+Install the skill for 40+ agents:
+npx skills add vipulgupta2048/gitshot
 
-Not "minimal dependencies." Zero.
+### Tweet 5 — Zero deps
+
+gitshot has zero runtime npm dependencies.
+
+Not "minimal." Zero.
 
 Node.js built-in fetch, crypto, fs, child_process. That's the whole stack.
 
-npm install is instant. npx just works.
+4 backends: GitHub Releases, Catbox.moe, Cloudinary, imgbb.
 
----
+Works over SSH. In CI. In Docker. Everywhere.
 
-## Tweet 5 — Backends
-
-4 upload backends, pick what works for you:
-
--> GitHub Releases (default, permanent URLs)
--> Catbox.moe (zero config, always works)
--> Cloudinary (CDN, free tier)
--> imgbb (simple, free)
-
-Auto-detects the best one. Falls back gracefully.
-
----
-
-## Tweet 6 — Agent-friendly
-
-Built for the AI agent era:
-
-- Clean stdout (just the URL/markdown)
-- Logs on stderr (won't pollute pipes)
-- --json mode for structured output
-- Pipes directly into gh commands
-- No interactive prompts, ever
-
-Claude, Cursor, Copilot — they can all use this.
-
-npx skills add vipulgupta2048/gitshot
-
----
-
-## Tweet 7 — SSH/CI
-
-Where gitshot works:
-
-Your local terminal
-SSH into a remote server
-GitHub Actions
-Docker containers
-Codespaces
-Any CI/CD pipeline
-
-Where it doesn't work:
-
-Nowhere, actually.
-
----
-
-## Tweet 8 — vs alternatives
-
-"Use gh-attach" -> Archived. Required Playwright.
-"Use GHPic" -> macOS only. Needs Raycast.
-"Just open a browser" -> I'm in an SSH session.
-"Use the API" -> There is no API.
-
-gitshot: zero deps, works everywhere.
-
----
-
-## Tweet 9 — Install CTA
+### Tweet 6 — CTA
 
 Try it right now:
 
-npx gitshot your-image.png
+npx gitshot rick.gif
 
-Or install globally:
-
-npm i -g gitshot
-
-That's it. One command. Ships compiled JS, no build step needed.
+Shot taken. PR updated. No browser needed.
 
 github.com/vipulgupta2048/gitshot
-
----
-
-## Tweet 10 — Vision
-
-What's next for gitshot:
-
--> Clipboard paste (screenshot -> upload in one command)
--> gh extension polish
--> Before/after comparison tables
--> GitHub Actions action
--> More backends
-
-The terminal is where we work. Images shouldn't require leaving it.

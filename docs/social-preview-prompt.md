@@ -5,21 +5,36 @@ Use this prompt in Google Gemini (or any image generation AI) to create the GitH
 ## Prompt
 
 ```
-Create a social media preview image (1280x640 pixels) for a developer CLI tool called "gitshot".
+Create a social media preview image (1280x640 pixels) for "gitshot" — a CLI tool that uploads images to GitHub from the terminal.
 
-Design requirements:
-- Dark background using the Catppuccin Mocha color palette (base: #1e1e2e)
-- The word "gitshot" in large, bold, monospace font (like JetBrains Mono or Fira Code) in white/light lavender (#cdd6f4), centered in the upper third
-- Below the name, a subtle tagline in smaller text: "Images in GitHub, straight from your terminal." in surface2 color (#585b70)
-- In the center, show a minimal terminal window mockup with this command and output:
-  $ npx gitshot bug.png
-  ![bug](https://github.com/.../bug-a3f2.png)
-  Using release backend
-- Terminal window should have a dark surface (#313244) background with rounded corners and the classic three dots (red/yellow/green) in the top-left
-- The command text should be in green (#a6e3a1), the output in white (#cdd6f4), the status line in dim (#585b70)
-- Bottom-right corner: a small GitHub icon and "MIT License" in muted text (#585b70)
-- No gradients, no 3D effects, no stock photos. Clean, flat, developer-aesthetic.
-- The overall feel should be like a Charm.sh or Vercel product card — minimal, confident, dark.
+Visual concept:
+- The left half shows a minimal terminal window. The right half shows a GitHub PR comment with an embedded image — connected by a glowing green (#a6e3a1) arrow or stream of pixels flowing from terminal to GitHub, conveying "image goes from CLI → GitHub."
+
+Color palette (Catppuccin Mocha — use these exact hex values):
+- Background: deep dark base #1e1e2e with a subtle radial glow of green (#a6e3a1) at ~8% opacity behind the center, giving depth without a gradient
+- Terminal surface: #313244 with rounded corners (12px), classic three dots (red #f38ba8, yellow #f9e2af, green #a6e3a1) in the top bar on mantle #181825
+- Text colors: green #a6e3a1 for commands/prompts, white #cdd6f4 for output, dim #585b70 for status lines
+
+Terminal content (left side):
+  $ npx gitshot screenshot.png --pr 42
+  ✔ Uploaded to vipul/gitshot-images
+  ✔ Commented on PR #42
+  ![screenshot](https://github.com/…/screenshot-a3f2.png)
+
+GitHub mockup (right side):
+- A simplified GitHub PR comment card (white/light themed, like actual GitHub UI) showing an embedded image thumbnail with a small green checkmark badge, as if the image just landed in the PR
+
+Branding:
+- Top-left: the gitshot logo — bold monospace "gs" in green (#a6e3a1) inside a rounded dark rectangle (#1e1e2e), like the favicon
+- Top-center or just right of the logo: "gitshot" in large bold monospace (JetBrains Mono style), white #cdd6f4
+- Below the name: tagline "Images in GitHub, straight from your terminal." in muted #a6adc8, smaller weight
+- Bottom-right: "MIT · Zero Dependencies · Node 22+" in muted #585b70, small text
+
+Style rules:
+- Flat design only. No 3D, no drop shadows on the main card, no stock photos, no realistic photos.
+- The green pixel-stream or arrow connecting terminal → GitHub is the hero visual element — make it feel like data in motion (think: a dotted trail of small green squares dissolving from left to right)
+- Overall aesthetic: like a Charm.sh or Linear product card — premium, dark, developer-first, confident.
+- Do NOT include any human faces, hands, or camera icons. This is about code and terminals, not photography.
 
 Output as a high-resolution PNG at exactly 1280x640 pixels.
 ```
@@ -35,6 +50,8 @@ Output as a high-resolution PNG at exactly 1280x640 pixels.
 
 If AI generation doesn't produce good results, create manually:
 - Use Figma with Catppuccin Mocha theme
-- JetBrains Mono font
-- Terminal mockup with the command shown above
+- JetBrains Mono font for all text
+- Left: terminal mockup with the command above
+- Right: simplified GitHub comment card with image thumbnail
+- Center: green pixel-stream connecting them
 - Export as PNG at 1280x640

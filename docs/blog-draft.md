@@ -28,38 +28,54 @@ The reason? GitHub's image upload endpoint (`uploads.github.com`) requires brows
 
 I'm not the first person to try solving this:
 
-- **gh-attach**: The closest thing to a real solution. It used Playwright to automate a headless browser for uploads. Clever, but it required 200MB+ of browser binaries. It broke in SSH sessions, CI pipelines, and Docker containers. [It's been archived.](https://dev.to/atani/i-archived-my-cli-tool-gh-attach-after-realizing-playwright-cli-can-do-the-same-thing-upload-im-5cob)
+- **gh-attach**: Used Playwright to automate a headless browser. Required 200MB+ of browser binaries. Broke in SSH sessions, CI pipelines, and Docker containers. [Archived.](https://dev.to/atani/i-archived-my-cli-tool-gh-attach-after-realizing-playwright-cli-can-do-the-same-thing-upload-im-5cob)
+- **GHPic**: A Raycast extension for macOS. Not a CLI. Not cross-platform.
+- **imgur-upload-cli**: Uploads to imgur, not GitHub. Images can disappear.
+- **Manual workarounds**: Upload to any image host, copy URL, paste markdown. Tedious.
 
-- **GHPic**: A Raycast extension for macOS. Not a CLI. Not cross-platform. Requires Raycast.
-
-- **imgur-upload-cli**: Uploads to imgur, not GitHub. Images can disappear. No integration with issues or PRs.
-
-- **Manual workarounds**: Upload to any image host, copy URL, paste markdown. Fragile, tedious, breaks the flow.
-
-None of these work in the place where developers actually need them: the terminal, over SSH, inside CI.
+None of these work where developers actually need them: the terminal, over SSH, inside CI.
 
 ## How gitshot Works
 
 The key insight: **GitHub Releases assets are permanent, CDN-backed, and fully API-accessible.**
 
-When you run `gitshot screenshot.png`, here's what happens:
+When you run `gitshot rick.gif --pr 42`, here's what happens:
 
-1. gitshot checks if `gh` CLI is authenticated (most devs already have this)
-2. It creates a dedicated repo: `<your-username>/gitshot-images` (auto-created on first run)
-3. It uploads your image as a release asset to a `_gitshot` tagged release
-4. It returns a permanent URL: `https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png`
-5. That URL works everywhere GitHub renders markdown — issues, PRs, comments, READMEs, gists
+1. gitshot uploads your image as a release asset to `<you>/gitshot-images` (auto-created on first run)
+2. It gets a permanent URL: `https://github.com/you/gitshot-images/releases/download/_gitshot/rick-a1b2c3d4.gif`
+3. It posts that image as a comment on PR #42
 
 ```bash
-$ npx gitshot screenshot.png
-![screenshot](https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png)
+$ npx gitshot rick.gif --pr 42
+⠋ Uploading rick.gif...
+✓ Uploaded rick.gif
+⠋ Commenting on PR #42...
+✓ Commented on PR #42
+![rick](https://github.com/you/gitshot-images/releases/download/_gitshot/rick-a1b2c3d4.gif)
 ```
 
-The URL is on GitHub's own infrastructure. It renders natively. No external dependencies. No risk of the image disappearing because an image host shut down.
+One command. Upload + comment. No piping, no multi-step workflows.
+
+```bash
+# Comment on an issue
+gitshot rick.gif --issue 10
+
+# Comment with a caption
+gitshot rick.gif --pr 42 -m "Here's the fix"
+
+# Auto-detect PR from current branch
+gitshot rick.gif --pr
+
+# Create a new issue with image
+gitshot rick.gif --new-issue "Button is broken"
+
+# Just upload, print markdown
+gitshot rick.gif
+```
 
 ## Four Backends, One Interface
 
-Not everyone has `gh` CLI set up. Maybe you're on a fresh machine, or in a minimal Docker container, or you don't want to create another repo. So gitshot supports four backends:
+Not everyone has `gh` CLI set up. So gitshot supports four backends:
 
 | Backend | Setup | Best for |
 |---------|-------|----------|
@@ -70,43 +86,33 @@ Not everyone has `gh` CLI set up. Maybe you're on a fresh machine, or in a minim
 
 Auto-detection picks the best available option. If `gh` is authenticated, it uses GitHub Releases. If not, it falls back to Catbox.moe — free, no signup, just works.
 
-```bash
-# Force a specific backend
-gitshot --backend catbox screenshot.png
-
-# Cloudinary via env var
-CLOUDINARY_URL=cloudinary://key:secret@cloud gitshot diagram.png
-```
-
 ## Built for AI Agents
 
 This is 2026. Half of us are pairing with AI agents. An agent can take a screenshot, but it can't upload it to a GitHub issue. Until now.
 
-gitshot is designed to be agent-friendly:
+gitshot is agent-first:
 
-- **stdout** contains only the URL or markdown — no noise
-- **stderr** contains status messages and logs — agents can ignore it
-- **--json** mode returns structured output: `{"url", "markdown", "filename", "backend"}`
+- **One command** does upload + post (no piping two CLIs together)
+- **stdout** contains only the URL/markdown — no noise
+- **stderr** shows spinner progress — agents can ignore it
+- **--json** returns structured output
 - **No interactive prompts** — ever
-- **Exit codes** are clean: 0 = success, 1 = failure
-- **Pipes directly** into `gh` commands
+- **Exit codes**: 0 = success, 1 = failure
 
 ```bash
-# Agent workflow: screenshot → issue comment
-npx gitshot screenshot.png | gh issue comment 42 --body-file -
+# Agent workflow: upload + comment on PR in one shot
+npx gitshot rick.gif --pr 42 -m "Here's the bug"
 
-# Agent workflow: structured output
-npx gitshot --json screenshot.png
-# → {"url":"https://...","markdown":"![...](...)","filename":"screenshot.png","backend":"release"}
+# Structured output for programmatic use
+npx gitshot --json rick.gif
+# → {"url":"https://...","markdown":"![...](...)","filename":"rick.gif","backend":"release"}
 ```
 
-You can install it as an AI agent skill:
+Install as an agent skill for Claude Code, Cursor, Copilot, and 40+ others:
 
 ```bash
 npx skills add vipulgupta2048/gitshot
 ```
-
-Once installed, your agent knows when and how to use gitshot. Ask it to "attach a screenshot to the PR" and it handles the rest.
 
 ## Technical Decisions
 
@@ -117,28 +123,20 @@ gitshot uses only Node.js built-ins: `fetch` (Node 22+), `crypto`, `fs`, `child_
 - 2 dev dependencies: `typescript` and `@types/node`
 - 0 runtime dependencies
 
-This means `npm install` is near-instant and `npx gitshot` downloads just the compiled JS — no dependency resolution, no supply chain risk.
-
 ### TypeScript, not Go or Rust
 
 For a tool like this, TypeScript is the right choice:
 
-- **npx**: Zero-install execution. `npx gitshot` works on any machine with Node.js. No downloading platform-specific binaries.
-- **npm ecosystem**: The largest package registry. Easy discovery, easy install.
-- **Fast enough**: The bottleneck is network I/O (uploading images), not CPU. TypeScript adds no meaningful overhead.
-- **Developer familiarity**: Most GitHub users already have Node.js installed.
-
-A Go or Rust binary would require platform-specific downloads, Homebrew taps, or installation scripts. `npx` is universal.
-
-### ES Modules, Node 22+
-
-gitshot requires Node.js 22+ because it uses the built-in `fetch` API (stable in Node 22). This eliminates the need for `node-fetch` or `undici` as dependencies. Node 22 is LTS as of 2025, so this is a reasonable minimum.
+- **npx**: Zero-install execution. `npx gitshot` works on any machine with Node.js.
+- **npm ecosystem**: Largest package registry. Easy discovery, easy install.
+- **Fast enough**: The bottleneck is network I/O, not CPU.
+- **Developer familiarity**: Most GitHub users already have Node.js.
 
 ## Try It
 
 ```bash
 # One command, zero install
-npx gitshot your-image.png
+npx gitshot rick.gif --pr 42
 
 # Install globally
 npm install -g gitshot
@@ -147,18 +145,9 @@ npm install -g gitshot
 gh extension install vipulgupta2048/gitshot
 ```
 
-It's MIT licensed. The code is straightforward — about 400 lines of TypeScript across 6 files. PRs welcome.
+Shot taken. PR updated. No browser needed.
 
 **GitHub**: [github.com/vipulgupta2048/gitshot](https://github.com/vipulgupta2048/gitshot)
-
-## What's Next
-
-- Clipboard paste: `gitshot --paste` to upload directly from clipboard
-- GitHub Actions action: `uses: vipulgupta2048/gitshot-action@v1`
-- Before/after comparison: Generate side-by-side markdown tables
-- More backends: S3, R2, custom servers
-
-The terminal is where we work. Images shouldn't require leaving it.
 
 ---
 
