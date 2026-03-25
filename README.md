@@ -26,7 +26,7 @@ GitHub has **no API** for uploading images to issues, PRs, or comments. This has
 
 # Installation
 
-**Install for Humans**
+## Install for Humans
 
 ```bash
 # Use directly with npx (zero install)
@@ -36,7 +36,8 @@ npx gitshot rick.gif
 npm install -g gitshot
 ```
 
-**Install for Agents**
+## **Install for Agents**
+
 Install the gitshot skill for Command Code, Claude Code, Cursor, Copilot, Codex, and [40+ other agents](https://skills.sh):
 
 ```bash
@@ -45,7 +46,7 @@ npx skills add vipulgupta2048/gitshot
 
 Once installed, your agent automatically knows when and how to use `gitshot` — just ask it to "attach a screenshot to the PR" or "upload an image to the issue."
 
-**Install as GitHub CLI Extension**
+## **Install as GitHub CLI Extension**
 
 ```bash
 gh extension install vipulgupta2048/gitshot
