@@ -16,7 +16,7 @@ body:
       label: Steps to reproduce
       description: What commands did you run?
       placeholder: |
-        1. Run `gitshot screenshot.png`
+        1. Run `gitshot rick.gif`
         2. See error...
     validations:
       required: true

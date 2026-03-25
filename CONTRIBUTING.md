@@ -16,7 +16,7 @@ npm install
 npm run build
 
 # Run locally
-node dist/index.js screenshot.png
+node dist/index.js rick.gif
 ```
 
 **Requirements:** Node.js 22+, npm 10+

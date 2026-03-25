@@ -25,4 +25,4 @@
 ## Screenshots
 
 <!-- Use gitshot to upload screenshots here! -->
-<!-- npx gitshot screenshot.png -->
+<!-- npx gitshot rick.gif -->
