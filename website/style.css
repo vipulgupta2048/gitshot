@@ -1,0 +1,405 @@
+/* gitshot landing page — Catppuccin Mocha theme, no JS, LLM-friendly */
+
+:root {
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --overlay0: #6c7086;
+  --text: #cdd6f4;
+  --subtext0: #a6adc8;
+  --subtext1: #bac2de;
+  --green: #a6e3a1;
+  --red: #f38ba8;
+  --yellow: #f9e2af;
+  --blue: #89b4fa;
+  --mauve: #cba6f7;
+  --teal: #94e2d5;
+  --peach: #fab387;
+  --lavender: #b4befe;
+  --flamingo: #f2cdcd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  background: var(--base);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 80px 0 60px;
+}
+
+.hero-logo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero-logo .accent {
+  color: var(--green);
+}
+
+.hero-tagline {
+  font-size: 1.25rem;
+  color: var(--subtext0);
+  max-width: 560px;
+  margin: 0 auto 40px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.btn:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: var(--crust);
+}
+
+.btn-secondary {
+  background: var(--surface0);
+  color: var(--text);
+}
+
+/* Terminal demo */
+.terminal {
+  background: var(--surface0);
+  border-radius: 12px;
+  max-width: 680px;
+  margin: 40px auto 0;
+  overflow: hidden;
+  text-align: left;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--mantle);
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red { background: var(--red); }
+.terminal-dot.yellow { background: var(--yellow); }
+.terminal-dot.green { background: var(--green); }
+
+.terminal-title {
+  font-size: 0.8rem;
+  color: var(--overlay0);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.terminal-body {
+  padding: 20px 24px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.terminal-body .prompt {
+  color: var(--green);
+}
+
+.terminal-body .comment {
+  color: var(--overlay0);
+}
+
+.terminal-body .output {
+  color: var(--subtext1);
+}
+
+.terminal-body .url {
+  color: var(--blue);
+}
+
+/* Trust block */
+.trust {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 40px 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--surface0);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--subtext1);
+}
+
+.pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* Sections */
+section {
+  padding: 60px 0;
+}
+
+section + section {
+  border-top: 1px solid var(--surface0);
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: var(--subtext0);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+/* Problem section */
+.problem-text {
+  font-size: 1.1rem;
+  color: var(--subtext1);
+  max-width: 640px;
+  line-height: 1.8;
+}
+
+.problem-text strong {
+  color: var(--text);
+}
+
+.problem-text a {
+  color: var(--blue);
+}
+
+/* How it works */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.step {
+  background: var(--surface0);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  color: var(--crust);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.step-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--subtext0);
+  line-height: 1.6;
+}
+
+/* Features grid */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.feature {
+  background: var(--surface0);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.feature-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.feature-desc {
+  font-size: 0.9rem;
+  color: var(--subtext0);
+  line-height: 1.5;
+}
+
+/* Comparison table */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--surface0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--surface0);
+  white-space: nowrap;
+}
+
+tr:hover td {
+  background: var(--surface0);
+}
+
+.check { color: var(--green); }
+.cross { color: var(--surface2); }
+
+/* Install section */
+.install-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.install-card {
+  background: var(--surface0);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.install-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.install-card code {
+  display: block;
+  background: var(--mantle);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--green);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--surface0);
+  color: var(--overlay0);
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--subtext0);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hero {
+    padding: 48px 0 40px;
+  }
+
+  .hero-logo {
+    font-size: 2.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.05rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .terminal-body {
+    font-size: 0.8rem;
+  }
+}
