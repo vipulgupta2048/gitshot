@@ -1,0 +1,23 @@
+{
+  "name": "gitshot-video",
+  "version": "1.0.0",
+  "description": "Remotion launch video for gitshot",
+  "scripts": {
+    "preview": "remotion studio",
+    "render": "bash render.sh",
+    "render:twitter": "remotion render GitshotDemo out/gitshot-twitter.mp4 --width 1280 --height 720 --crf 18",
+    "render:youtube": "remotion render GitshotDemo out/gitshot-youtube.mp4 --width 1920 --height 1080 --crf 18"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.439",
+    "@remotion/media-utils": "4.0.439",
+    "@remotion/motion-blur": "4.0.439",
+    "@remotion/transitions": "4.0.439",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.439",
+    "typescript": "6.0.2"
+  }
+}
