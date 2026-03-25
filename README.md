@@ -17,19 +17,17 @@
   <img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700">
 </p>
 
-```bash
-$ npx gitshot rick.gif --pr 42
-Commented on PR #42
-![rick](https://github.com/you/gitshot-images/releases/download/_gitshot/rick-81f14d68.gif)
-```
+Upload images from the terminal and get markdown-ready URLs for GitHub issues, PRs, and comments. Auto-detects the best backend. Built for AI agents and humans.
 
-## Why?
+## Why do I need this?
 
-GitHub has **no API** for uploading images to issues, PRs, or comments. This has been [requested since 2020](https://github.com/cli/cli/issues/1895) — 5+ years, no resolution. The `gh` CLI's `--body` only accepts text. AI agents can take screenshots but can't attach them.
+GitHub has **no API** for uploading images to issues, PRs, or comments. This has been [requested since 2020](https://github.com/cli/cli/issues/1895) — 5+ years, no resolution. The `gh` CLI's `--body` only accepts text. AI agents can take screenshots but can't attach them. It's a gap you are bound to hit. 
 
 `gitshot` fixes this in one command.
 
-## Install for Humans
+# Installation
+
+**Install for Humans**
 
 ```bash
 # Use directly with npx (zero install)
@@ -39,9 +37,8 @@ npx gitshot rick.gif
 npm install -g gitshot
 ```
 
-## Install for Agents
-
-Install the gitshot skill for Claude Code, Cursor, Copilot, Codex, and [40+ other agents](https://skills.sh):
+**Install for Agents**
+Install the gitshot skill for Command Code, Claude Code, Cursor, Copilot, Codex, and [40+ other agents](https://skills.sh):
 
 ```bash
 npx skills add vipulgupta2048/gitshot
@@ -49,7 +46,7 @@ npx skills add vipulgupta2048/gitshot
 
 Once installed, your agent automatically knows when and how to use `gitshot` — just ask it to "attach a screenshot to the PR" or "upload an image to the issue."
 
-## Install as GitHub CLI Extension
+**Install as GitHub CLI Extension**
 
 ```bash
 gh extension install vipulgupta2048/gitshot
@@ -98,7 +95,7 @@ No `gh`? It falls back to [catbox.moe](https://catbox.moe) — free, no signup, 
 
 | Backend | Setup | Limits | Best for |
 |---------|-------|--------|----------|
-| **release** (default) | `gh` CLI authenticated | 2GB/file | Most reliable. Images on GitHub. |
+| **github releases** (default) | `gh` CLI authenticated | 2GB/file | Most reliable. Images on GitHub. |
 | **catbox** (fallback) | None | 200MB/file | No `gh` CLI, quick and dirty |
 | **cloudinary** | `CLOUDINARY_URL` env var | 25GB free | Production, CDN, transforms |
 | **imgbb** | `IMGBB_API_KEY` env var | 32MB/file | Simple free hosting |
@@ -135,46 +132,6 @@ Get your free key at [api.imgbb.com](https://api.imgbb.com).
 gitshot --repo myorg/my-images rick.gif
 ```
 
-## Agent-Friendly Design
-
-| Feature | Detail |
-|---------|--------|
-| **One command** | `gitshot img.png --pr 42` uploads AND comments |
-| **Auto-detect PR** | `gitshot img.png --pr` finds PR from current branch |
-| **Zero config** | Works with just `gh` auth |
-| **Clean stdout** | Only URLs/markdown to stdout. Logs to stderr. |
-| **JSON mode** | `--json` returns `{"url", "markdown", "filename", "backend"}` |
-| **No prompts** | Never asks for interactive input |
-| **Exit codes** | 0 = success, 1 = failure |
-
-## CLI Reference
-
-```
-gitshot <image> [image...] [flags]
-
-Actions:
-      --pr [number]       Comment on PR (auto-detects from branch if no number)
-      --issue <number>    Comment on issue
-      --new-issue <title> Create new issue with image
-  -m <text>               Caption/message to include with image
-
-Output:
-  -r, --raw               Raw URL only, no markdown
-      --json              JSON output (machine-readable)
-
-Backends:
-  -b, --backend <name>    release | catbox | cloudinary | imgbb
-      --repo <owner/repo> Target repo for release backend
-      --tag <name>        Release tag (default: _gitshot)
-
-Environment Variables:
-  CLOUDINARY_URL    cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-  IMGBB_API_KEY     API key from https://api.imgbb.com
-  GITHUB_TOKEN      GitHub token (alternative to gh auth)
-
-Supported formats: PNG, JPG, JPEG, GIF, SVG, WebP, BMP, ICO, TIFF, AVIF
-```
-
 ## Comparison
 
 | Feature | gitshot | gh-attach | GHPic | Manual upload |
@@ -202,4 +159,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and guidelines.
 
 ## License
 
-MIT
+Code and assests licened under MIT.
+Built by Vipul Gupta using Command Code. 
