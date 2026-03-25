@@ -1,20 +1,22 @@
 # gitshot
 
 [![npm version](https://img.shields.io/npm/v/gitshot?style=flat-square)](https://www.npmjs.com/package/gitshot)
+[![npm downloads](https://img.shields.io/npm/dm/gitshot?style=flat-square)](https://www.npmjs.com/package/gitshot)
 [![CI](https://img.shields.io/github/actions/workflow/status/vipulgupta2048/gitshot/ci.yml?style=flat-square)](https://github.com/vipulgupta2048/gitshot/actions)
 [![license](https://img.shields.io/github/license/vipulgupta2048/gitshot?style=flat-square)](https://github.com/vipulgupta2048/gitshot/blob/main/LICENSE)
-[![downloads](https://img.shields.io/npm/dm/gitshot?style=flat-square)](https://www.npmjs.com/package/gitshot)
 
-**One command. Image in your PR.**
 
-Upload images from the terminal and get markdown-ready URLs for GitHub issues, PRs, and comments. Auto-detects the best backend. Built for AI agents and humans.
+**Shot taken. PR updated. No browser needed.**
+
+Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Screenshots on GitHub, now without a browser.
 
 <!-- TODO: Replace with actual demo GIF after recording with VHS -->
 <!-- <p align="center"><img src="demo/gitshot-demo.gif" alt="gitshot demo" width="700"></p> -->
 
 ```bash
-$ npx gitshot screenshot.png
-![screenshot](https://github.com/you/gitshot-images/releases/download/_gitshot/screenshot-a1b2c3d4.png)
+$ npx gitshot rick.gif --pr 42
+Commented on PR #42
+![rick](https://github.com/you/gitshot-images/releases/download/_gitshot/rick-81f14d68.gif)
 ```
 
 ## Why?
@@ -27,36 +29,45 @@ GitHub has **no API** for uploading images to issues, PRs, or comments. This has
 
 ```bash
 # Use directly with npx (zero install)
-npx gitshot screenshot.png
+npx gitshot rick.gif
 
 # Install globally
 npm install -g gitshot
 
 # As a gh CLI extension
 gh extension install vipulgupta2048/gitshot
-gh shot screenshot.png
+gh shot rick.gif
 ```
 
 ## Usage
 
 ```bash
-# Upload a screenshot (auto-detects best backend)
-gitshot screenshot.png
+# Upload + comment on a PR (one command)
+gitshot rick.gif --pr 42
 
-# Upload and comment on a PR — one pipeline
-gitshot screenshot.png | gh pr comment 42 --body-file -
+# Upload + comment with a caption
+gitshot rick.gif --pr 42 -m "Here's the fix"
 
-# Upload and create an issue with an image
-gitshot bug.png | gh issue create --title "Bug report" --body-file -
+# Auto-detect PR from current branch
+gitshot rick.gif --pr
 
-# Multiple images
-gitshot before.png after.png
+# Upload + comment on an issue
+gitshot rick.gif --issue 10
+
+# Upload + create a new issue
+gitshot rick.gif --new-issue "Button is misaligned"
+
+# Multiple images with caption
+gitshot before.png after.png --pr 42 -m "Visual diff"
+
+# Just upload, print markdown (no GitHub action)
+gitshot rick.gif
 
 # Raw URL only (for scripting)
-gitshot --raw screenshot.png
+gitshot --raw rick.gif
 
 # JSON output (for agents/LLMs)
-gitshot --json screenshot.png
+gitshot --json rick.gif
 # → {"url":"https://...","markdown":"![...](...)","backend":"release"}
 ```
 
@@ -87,7 +98,7 @@ No `gh`? It falls back to [catbox.moe](https://catbox.moe) — free, no signup, 
 
 ```bash
 export CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
-gitshot screenshot.png
+gitshot rick.gif
 ```
 
 Get your free URL at [cloudinary.com/console](https://cloudinary.com/console).
@@ -96,7 +107,7 @@ Get your free URL at [cloudinary.com/console](https://cloudinary.com/console).
 
 ```bash
 export IMGBB_API_KEY=your_api_key
-gitshot screenshot.png
+gitshot rick.gif
 ```
 
 Get your free key at [api.imgbb.com](https://api.imgbb.com).
@@ -104,7 +115,7 @@ Get your free key at [api.imgbb.com](https://api.imgbb.com).
 ### Using a specific repo
 
 ```bash
-gitshot --repo myorg/my-images screenshot.png
+gitshot --repo myorg/my-images rick.gif
 ```
 
 ## Agent Skill
@@ -121,34 +132,40 @@ Once installed, your agent automatically knows when and how to use `gitshot` —
 
 ```bash
 gh extension install vipulgupta2048/gitshot
-gh shot screenshot.png
-gh shot screenshot.png | gh pr comment 42 --body-file -
+gh shot rick.gif --pr 42
 ```
 
 ### Agent-Friendly Design
 
 | Feature | Detail |
 |---------|--------|
-| **Zero config** | `npx gitshot <file>` works with just `gh` auth |
+| **One command** | `gitshot img.png --pr 42` uploads AND comments |
+| **Auto-detect PR** | `gitshot img.png --pr` finds PR from current branch |
+| **Zero config** | Works with just `gh` auth |
 | **Clean stdout** | Only URLs/markdown to stdout. Logs to stderr. |
 | **JSON mode** | `--json` returns `{"url", "markdown", "filename", "backend"}` |
-| **Composable** | Pipe output to any `gh` command |
 | **No prompts** | Never asks for interactive input |
 | **Exit codes** | 0 = success, 1 = failure |
 
 ## CLI Reference
 
 ```
-gitshot [flags] <image> [image...]
+gitshot <image> [image...] [flags]
 
-Flags:
+Actions:
+      --pr [number]       Comment on PR (auto-detects from branch if no number)
+      --issue <number>    Comment on issue
+      --new-issue <title> Create new issue with image
+  -m <text>               Caption/message to include with image
+
+Output:
+  -r, --raw               Raw URL only, no markdown
+      --json              JSON output (machine-readable)
+
+Backends:
   -b, --backend <name>    release | catbox | cloudinary | imgbb
-  -r, --raw               Output raw URL only
-      --json              Output JSON (machine-readable)
       --repo <owner/repo> Target repo for release backend
       --tag <name>        Release tag (default: _gitshot)
-  -v, --version           Print version
-  -h, --help              Show help with examples
 
 Environment Variables:
   CLOUDINARY_URL    cloudinary://API_KEY:API_SECRET@CLOUD_NAME
