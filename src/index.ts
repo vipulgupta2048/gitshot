@@ -116,6 +116,8 @@ function helpText(): string {
     `    ${dim("$")} gitshot rick.gif                   ${dim("(just upload)")}`,
     `    ${dim("$")} gitshot --json shot.png`,
     "",
+    `  ${dim("Note: release backend uploads to a public repo. Do not upload sensitive images.")}`,
+    "",
     separator(),
     `  ${dim("Docs & more:")} ${ul(dim("https://github.com/vipulgupta2048/gitshot"))}`,
     "",

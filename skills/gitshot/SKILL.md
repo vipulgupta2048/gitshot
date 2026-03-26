@@ -85,3 +85,4 @@ gh issue create --title "UI Bug: Button misaligned" --body "$BODY"
 - Exit code 0 = success, 1 = failure
 - Supported formats: PNG, JPG, JPEG, GIF, SVG, WebP, BMP, ICO, TIFF, AVIF
 - First run with release backend auto-creates `<user>/gitshot-images` repo (one-time)
+- **Privacy:** The release backend uploads to a PUBLIC repo. Do not upload sensitive images (credentials, internal dashboards). Use Cloudinary or imgbb for sensitive content.

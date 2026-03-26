@@ -91,6 +91,8 @@ If you have [`gh` CLI](https://cli.github.com) authenticated, `gitshot` creates 
 
 No `gh`? It falls back to [catbox.moe](https://catbox.moe) — free, no signup, zero config.
 
+> **Privacy notice:** The `gitshot-images` repo is created as **public** by default, meaning uploaded images are accessible to anyone with the URL. Do not upload sensitive content (credentials, internal dashboards, private data) using the default release backend. Since [May 2023](https://github.blog/changelog/2023-05-09-more-secure-private-attachments/), GitHub restricts access to images attached to private repos — but release assets on a public repo have no such protection. Use Cloudinary or imgbb with access controls for sensitive images. You are responsible for what you upload.
+
 ## Backends
 
 | Backend | Setup | Limits | Best for |
