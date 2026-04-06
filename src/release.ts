@@ -162,8 +162,10 @@ export class ReleaseUploader implements Uploader {
         { stdio: "pipe" }
       );
 
-      // Construct the download URL directly (more reliable than querying)
-      const url = `https://github.com/${this.repo}/releases/download/${this.tag}/${uploadName}`;
+      // GitHub replaces spaces with dots in release asset filenames,
+      // so we must match that in the constructed URL
+      const assetName = uploadName.replace(/ /g, ".");
+      const url = `https://github.com/${this.repo}/releases/download/${this.tag}/${assetName}`;
       return { url, filename: originalName, backend: this.name };
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
