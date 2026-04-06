@@ -34,6 +34,46 @@ export function getGhUsername(): string {
   return exec("gh api user -q .login");
 }
 
+function validateRepoSafety(repo: string): void {
+  const [owner] = repo.split("/");
+  if (!owner) {
+    throw new Error(`Invalid repo format "${repo}". Expected: owner/repo`);
+  }
+
+  // Check that the owner is a personal user account, not an organization
+  try {
+    const ownerType = exec(`gh api users/${owner} -q .type`);
+    if (ownerType !== "User") {
+      throw new Error(
+        `Cannot use repo "${repo}" — owner "${owner}" is a ${ownerType}, not a personal user account.\n` +
+        "gitshot only creates releases on personal user repos to avoid leaking images into org-owned repos.\n" +
+        "Omit --repo to auto-create a personal image hosting repo."
+      );
+    }
+  } catch (e) {
+    if (e instanceof Error && e.message.includes("Cannot use repo")) throw e;
+    throw new Error(
+      `Cannot verify owner "${owner}" of repo "${repo}".\n` +
+      "Ensure the owner exists and you have access."
+    );
+  }
+
+  // Check that the repo is public (not private/internal)
+  try {
+    const visibility = exec(`gh repo view ${repo} --json visibility -q .visibility`);
+    if (visibility !== "PUBLIC") {
+      throw new Error(
+        `Cannot use repo "${repo}" — it is ${visibility.toLowerCase()}.\n` +
+        "gitshot only uploads to public repos to prevent accidental exposure of private repo release assets.\n" +
+        "Use a public repo or omit --repo to auto-create one."
+      );
+    }
+  } catch (e) {
+    if (e instanceof Error && e.message.includes("Cannot use repo")) throw e;
+    // Repo may not exist yet — that's okay, ensureImageRepo will create it as public
+  }
+}
+
 export class ReleaseUploader implements Uploader {
   name = "release";
   private tag: string;
@@ -60,6 +100,7 @@ export class ReleaseUploader implements Uploader {
     }
 
     if (opts?.repo) {
+      validateRepoSafety(opts.repo);
       this.repo = opts.repo;
     } else {
       // Auto-create a dedicated image hosting repo for the user

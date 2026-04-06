@@ -6,7 +6,7 @@ Zero-config, agent-first CLI to upload images to issues, PRs, and comments. Scre
 
 ## The Problem
 
-GitHub has no API for uploading images to issues, PRs, or comments. This has been requested since 2020 (cli/cli#1895) — 5+ years with no resolution. The gh CLI's --body flag only accepts text. AI agents can take screenshots but can't attach them. gitshot fixes this in one command.
+GitHub has no API for uploading images to issues, PRs, or comments. This has been requested since 2020 — 5+ years with no resolution. The gh CLI's --body flag only accepts text. AI agents can take screenshots but can't attach them. gitshot fixes this in one command.
 
 ## Installation
 
@@ -182,10 +182,7 @@ gh issue create --title "UI Bug" --body "$BODY"
 
 ## Background
 
-This tool exists because of these long-standing issues:
-- cli/cli#1895 — Upload and Embed Files to PRs/Issues/Comments (2020, open 5+ years)
-- cli/cli#12960 — Support image/file attachments (critical for agentic workflows)
-- github/github-mcp-server#738 — Allow uploading files as attachments
+GitHub has no public API for uploading images to issues, PRs, or comments. The upload endpoint requires browser session cookies — not OAuth tokens. This has been an open request since 2020 with no resolution. gitshot works around this using GitHub Release Assets.
 
 ## Links
 

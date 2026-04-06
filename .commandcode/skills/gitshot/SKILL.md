@@ -1,6 +1,6 @@
 ---
 name: gitshot
-description: Upload screenshots and images to GitHub, returning markdown-ready URLs for PRs, issues, and comments. Can upload AND post to PRs/issues in one command. Use when needing to attach images to GitHub PRs/issues, upload screenshots, embed visuals in markdown, or when a workflow produces images that should be shared on GitHub. Trigger words - upload image, attach screenshot, add image to PR, embed screenshot, visual diff, before/after screenshot.
+description: Upload screenshots and images to GitHub, returning markdown-ready URLs for PRs, issues, and comments. Can upload AND post to PRs/issues in one command. Use when needing to attach images to GitHub PRs/issues, upload screenshots, embed visuals in markdown, or when a workflow produces images that should be shared on GitHub. Trigger words - upload image, attach screenshot, add image to PR, add image to issue, embed screenshot.
 license: MIT
 argument-hint: <image-path> [--pr N] [--issue N]
 metadata:

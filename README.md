@@ -149,11 +149,7 @@ gitshot --repo myorg/my-images rick.gif
 
 ## Background
 
-This tool exists because of these long-standing issues:
-
-- [cli/cli#1895](https://github.com/cli/cli/issues/1895) — Upload and Embed Files to PRs/Issues/Comments (2020, open 5+ years)
-- [cli/cli#12960](https://github.com/cli/cli/issues/12960) — Support image/file attachments (critical for agentic workflows)
-- [github-mcp-server#738](https://github.com/github/github-mcp-server/issues/738) — Allow uploading files as attachments
+GitHub has no public API for uploading images to issues, PRs, or comments. This has been requested since 2020 with no resolution. The upload endpoint requires browser session cookies — not OAuth tokens, not PATs. There is no programmatic way to do it. gitshot works around this using GitHub Release Assets, which are fully API-accessible.
 
 ## Contributing
 
